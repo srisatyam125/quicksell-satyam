@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useDispatch, useSelector } from "react-redux";
+import Navbar from "./components/Navbar";
+import Dashboard from "./components/Dashboard";
+import { useEffect } from "react";
+import { fetchAllData } from "./Actions/DataAction";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const dispatch = useDispatch();
+  const { allTickets } = useSelector((state) => state.DataReducer);
+
+  useEffect(() => {
+    dispatch(fetchAllData());
+  }, [dispatch]);
+
+  return allTickets ? (
+    <div style={{ paddingTop: "10px" }}>
+      <Navbar />
+      {/* <hr style={{ marginTop: "10px" }} /> */}
+      <Dashboard />
     </div>
+  ) : (
+    <></>
   );
 }
 
